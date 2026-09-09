@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:minHeight="48dp" android:text="@string/back" android:textAllCaps="false" />
+        <TextView
+            android:id="@+id/albumTitle"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:textColor="@color/text_primary"
+            android:textSize="30sp" android:textStyle="bold" />
+        <TextView
+            android:id="@+id/artistName"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:textColor="@color/primary"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/releaseYear"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp" android:textSize="16sp" />
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:textSize="16sp" />
+        <TextView
+            android:id="@+id/trackCount"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:textSize="16sp" />
+        <TextView
+            android:id="@+id/popularTrack"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:textSize="16sp" />
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="28dp" android:text="@string/description_label"
+            android:textColor="@color/text_primary" android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_primary" android:textSize="16sp"
+            android:textIsSelectable="true" />
+    </LinearLayout>
+</ScrollView>
