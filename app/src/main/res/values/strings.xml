@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">8092915Assignment2</string>
+    <string name="app_name">Album Explorer</string>
+    <string name="login_title">Explore great albums</string>
+    <string name="login_subtitle">Sign in with your university details.</string>
+    <string name="username_hint">Student ID (without s)</string>
+    <string name="password_hint">First name (case sensitive)</string>
+    <string name="login">Log in</string>
+    <string name="dashboard_title">Album catalogue</string>
+    <string name="dashboard_subtitle">Tap an album to read its story.</string>
+    <string name="album_count">%1$d albums</string>
+    <string name="album_meta">%1$d • %2$s • %3$d tracks</string>
+    <string name="artist_value">Artist: %1$s</string>
+    <string name="release_year_value">Release year: %1$d</string>
+    <string name="genre_value">Genre: %1$s</string>
+    <string name="track_count_value">Track count: %1$d</string>
+    <string name="popular_track_value">Popular track: %1$s</string>
+    <string name="description_label">About this album</string>
+    <string name="back">Back to albums</string>
+    <string name="refresh">Refresh</string>
+    <string name="retry">Retry</string>
+    <string name="empty_albums">No albums were returned. Try refreshing.</string>
+    <string name="loading">Loading, please wait</string>
 </resources>
