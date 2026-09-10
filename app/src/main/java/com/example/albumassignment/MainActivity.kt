@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     fun showDashboard(keypass: String) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
+            // Fade between screens using the two small animator XML files.
+            setCustomAnimations(R.animator.fade_in, R.animator.fade_out)
             replace(R.id.fragmentContainer, DashboardFragment.newInstance(keypass))
         }
     }
@@ -46,6 +48,10 @@ class MainActivity : AppCompatActivity() {
     fun showDetails(album: Album) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
+            setCustomAnimations(
+                R.animator.fade_in, R.animator.fade_out, // opening Details
+                R.animator.fade_in, R.animator.fade_out  // returning to Dashboard
+            )
             replace(R.id.fragmentContainer, DetailsFragment.newInstance(album))
             addToBackStack("details")
         }

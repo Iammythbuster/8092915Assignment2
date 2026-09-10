@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@color/background" android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:padding="24dp">
@@ -9,33 +11,53 @@
             android:id="@+id/backButton"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:minHeight="48dp" android:text="@string/back" android:textAllCaps="false" />
+            android:minHeight="48dp" android:text="@string/back" android:textAllCaps="false"
+            app:cornerRadius="12dp" app:icon="@drawable/ic_arrow_back"
+            app:iconSize="18dp" app:iconPadding="8dp" />
+        <ImageView
+            android:layout_width="64dp" android:layout_height="64dp"
+            android:layout_marginTop="24dp" android:background="@drawable/bg_icon_tile"
+            android:padding="16dp" android:src="@drawable/ic_music_note"
+            android:contentDescription="@null" android:importantForAccessibility="no" />
         <TextView
             android:id="@+id/albumTitle"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" android:textColor="@color/text_primary"
-            android:textSize="30sp" android:textStyle="bold" />
+            android:layout_marginTop="20dp" android:textColor="@color/text_primary"
+            android:textSize="30sp" android:textStyle="bold" tools:text="OK Computer" />
         <TextView
             android:id="@+id/artistName"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" android:textColor="@color/primary"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/releaseYear"
+            android:layout_marginTop="8dp" android:textColor="@color/primary"
+            android:textSize="18sp" tools:text="Artist: Radiohead" />
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" android:textSize="16sp" />
-        <TextView
-            android:id="@+id/genre"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:textSize="16sp" />
-        <TextView
-            android:id="@+id/trackCount"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:textSize="16sp" />
-        <TextView
-            android:id="@+id/popularTrack"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:textSize="16sp" />
+            android:layout_marginTop="24dp" app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="16dp" app:cardElevation="0dp"
+            app:strokeColor="@color/outline" app:strokeWidth="1dp">
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="18dp">
+                <TextView
+                    android:id="@+id/releaseYear"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="16sp" tools:text="Release year: 1997" />
+                <TextView
+                    android:id="@+id/genre"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:textSize="16sp"
+                    tools:text="Genre: Alternative Rock" />
+                <TextView
+                    android:id="@+id/trackCount"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:textSize="16sp"
+                    tools:text="Track count: 12" />
+                <TextView
+                    android:id="@+id/popularTrack"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" android:textSize="16sp"
+                    tools:text="Popular track: Karma Police" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
         <TextView
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="28dp" android:text="@string/description_label"
@@ -44,8 +66,9 @@
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:lineSpacingExtra="4dp"
-            android:textColor="@color/text_primary" android:textSize="16sp"
-            android:textIsSelectable="true" />
+            android:layout_marginTop="12dp" android:lineSpacingExtra="5dp"
+            android:textColor="@color/text_secondary" android:textSize="16sp"
+            android:textIsSelectable="true"
+            tools:text="Read the full story of this album here. The complete description is loaded from the API." />
     </LinearLayout>
 </ScrollView>
