@@ -1,13 +1,14 @@
 package com.example.albumassignment.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.albumassignment.data.Album
 import com.example.albumassignment.data.AlbumRepository
 import com.example.albumassignment.ui.errorMessage
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class DashboardUiState(
@@ -19,11 +20,11 @@ data class DashboardUiState(
 )
 
 class DashboardViewModel(private val repository: AlbumRepository) : ViewModel() {
-    private val _state = MutableLiveData(DashboardUiState())
-    val state: LiveData<DashboardUiState> = _state
+    private val _state = MutableStateFlow(DashboardUiState())
+    val state: StateFlow<DashboardUiState> = _state.asStateFlow()
 
     fun loadAlbums(keypass: String, forceRefresh: Boolean = false) {
-        val current = _state.value ?: DashboardUiState()
+        val current = _state.value
         if (current.loading || (current.loaded && !forceRefresh)) return
         if (keypass.isBlank()) {
             _state.value = DashboardUiState(error = "Missing keypass. Please log in again.")

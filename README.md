@@ -14,6 +14,12 @@ The dashboard uses a RecyclerView. Every row displays the artist, album title,
 release year, genre, track count and popular track. Details displays these fields
 and the complete description. Album content comes from the API.
 
+## Interface
+
+The XML layouts use small vector icons, rounded outlined cards and consistent
+spacing. Two 180 ms property animators fade between fragments, including Back
+from Details. Material buttons and album cards provide press feedback.
+
 ## Requirements and versions
 
 - Android Studio with support for Android Gradle Plugin 8.9.2.
@@ -80,12 +86,27 @@ Base URL: `https://nit3213apinew.onrender.com/`
 | `ui/dashboard/` | Dashboard UI, list adapter and loading state |
 | `ui/details/` | Selected album details |
 | `ui/ErrorMessages.kt` | Converts errors into readable messages |
-| `app/src/test/` | Local unit tests and fake dependencies |
+| `app/src/test/` | Local unit tests and Mockito mock dependencies |
 
-The fragments observe their ViewModels with `viewLifecycleOwner`. The
+The ViewModels expose read-only StateFlow. The fragments collect it using
+`viewLifecycleOwner.lifecycleScope` and `repeatOnLifecycle(STARTED)`, so
+collection stops when the view stops and restarts when it becomes active. The
 ViewModels receive `AlbumRepository` through their constructors. Koin creates
-the network implementation in the running app; tests supply a fake. Retrofit
+the network implementation in the running app; tests inject Mockito mocks. Retrofit
 suspending functions run network requests without blocking the UI thread.
+
+## Flow and Mockito
+
+`MutableStateFlow` stays private in each ViewModel and `asStateFlow()` exposes
+read-only state. Login success is cleared after navigation to prevent
+repeated navigation when a new collector starts.
+
+Tests use Mockito Core 5.12.0 and Mockito-Kotlin 5.4.0 alongside JUnit 4.
+The test resource `mockito-extensions/org.mockito.plugins.MockMaker` selects
+`mock-maker-subclass`. It supports our repository/API interfaces without Java
+agent attachment; this configuration does not mock final classes or methods.
+`TestData.kt` contains sample values only; mocked interfaces supply behavior.
+There is no handwritten fake repository in the updated suite.
 
 ## Dependency injection
 
@@ -113,12 +134,18 @@ The supplied suite contains 19 tests: seven login ViewModel tests, seven
 dashboard ViewModel tests, four repository tests and one Koin wiring test.
 They cover invalid input, loading, case preservation, returned keypass usage,
 authentication failure, connection errors, retry, empty results, duplicate
-request prevention and retaining a loaded list. Tests use fake dependencies
+request prevention and retaining a loaded list. Tests use Mockito mock dependencies
 and do not contact the live API. `MainDispatcherRule` supplies a test main
-dispatcher; `InstantTaskExecutorRule` makes LiveData updates synchronous.
+dispatcher. The success tests collect StateFlow to check loading and result
+emissions. Mockito-Kotlin provides `mock`, `whenever` and `verify`.
 
 The tests verify application logic. A device/emulator run is also needed to
 check layouts, real authentication, JSON integration and fragment navigation.
+
+The local suite includes one DI wiring check that exercises several real
+components together; it is an integration-style check. The remaining tests
+isolate ViewModels or the repository with Mockito mocks. Automated UI tests for the
+assignment flows are not included; use the manual checks below.
 
 ## Manual verification
 
@@ -129,6 +156,8 @@ check layouts, real authentication, JSON integration and fragment navigation.
 - Back returns from Details to the dashboard.
 - Refresh reports a connection error when offline and Retry works after reconnecting.
 - Rotating the dashboard/details screen retains the current screen.
+- Long album names, large font settings and the keyboard leave controls usable.
+- The screen fade works during login, opening Details and returning with Back.
 
 ## Current scope
 
@@ -144,6 +173,8 @@ the dashboard ViewModel while that screen remains in the fragment back stack.
 - [Koin 4.1 Android ViewModel guide](https://insert-koin.io/docs/4.1/quickstart/android-viewmodel/)
 - [Retrofit](https://square.github.io/retrofit/)
 - [Testing Kotlin coroutines](https://developer.android.com/kotlin/coroutines/test)
+- [StateFlow and SharedFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)
+- [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin)
 
 Add any course-required acknowledgement of tools or assistance you used, in
 your own words.

@@ -1,6 +1,6 @@
 package com.example.albumassignment.data
 
-// ViewModels use this interface so tests can supply a fake repository.
+// ViewModels use this interface so tests can inject a Mockito mock.
 interface AlbumRepository {
     suspend fun login(username: String, password: String): String
     suspend fun getDashboard(keypass: String): DashboardResponse

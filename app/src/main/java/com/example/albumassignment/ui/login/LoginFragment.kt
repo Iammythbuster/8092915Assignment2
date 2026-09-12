@@ -6,9 +6,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.albumassignment.MainActivity
 import com.example.albumassignment.R
 import com.example.albumassignment.databinding.FragmentLoginBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -27,19 +32,24 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             )
         }
 
-        viewModel.state.observe(viewLifecycleOwner) { state ->
-            binding.progressBar.isVisible = state.loading
-            binding.loginButton.isEnabled = !state.loading
-            binding.usernameInput.isEnabled = !state.loading
-            binding.passwordInput.isEnabled = !state.loading
-            binding.errorText.isVisible = state.error != null
-            binding.errorText.text = state.error
+        // Collect only while this fragment view is started.
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    binding.progressBar.isVisible = state.loading
+                    binding.loginButton.isEnabled = !state.loading
+                    binding.usernameInput.isEnabled = !state.loading
+                    binding.passwordInput.isEnabled = !state.loading
+                    binding.errorText.isVisible = state.error != null
+                    binding.errorText.text = state.error
 
-            state.keypass?.let { keypass ->
-                ViewCompat.getWindowInsetsController(binding.root)
-                    ?.hide(WindowInsetsCompat.Type.ime())
-                (requireActivity() as MainActivity).showDashboard(keypass)
-                viewModel.navigationHandled()
+                    state.keypass?.let { keypass ->
+                        ViewCompat.getWindowInsetsController(binding.root)
+                            ?.hide(WindowInsetsCompat.Type.ime())
+                        (requireActivity() as MainActivity).showDashboard(keypass)
+                        viewModel.navigationHandled()
+                    }
+                }
             }
         }
     }

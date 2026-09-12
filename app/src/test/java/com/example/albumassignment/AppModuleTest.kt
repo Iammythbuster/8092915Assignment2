@@ -1,6 +1,5 @@
 package com.example.albumassignment
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.albumassignment.data.AlbumRepository
 import com.example.albumassignment.data.ApiService
 import com.example.albumassignment.di.appModule
@@ -12,7 +11,6 @@ import org.junit.Test
 import org.koin.dsl.koinApplication
 
 class AppModuleTest {
-    @get:Rule val instantRule = InstantTaskExecutorRule()
     @get:Rule val mainRule = MainDispatcherRule()
 
     @Test

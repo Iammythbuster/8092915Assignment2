@@ -1,12 +1,13 @@
 package com.example.albumassignment.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.albumassignment.data.AlbumRepository
 import com.example.albumassignment.ui.errorMessage
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class LoginUiState(
@@ -16,11 +17,11 @@ data class LoginUiState(
 )
 
 class LoginViewModel(private val repository: AlbumRepository) : ViewModel() {
-    private val _state = MutableLiveData(LoginUiState())
-    val state: LiveData<LoginUiState> = _state
+    private val _state = MutableStateFlow(LoginUiState())
+    val state: StateFlow<LoginUiState> = _state.asStateFlow()
 
     fun login(username: String, password: String) {
-        if (_state.value?.loading == true) return
+        if (_state.value.loading) return
         val studentId = username.trim()
 
         if (!studentId.matches(Regex("[0-9]{7,8}"))) {
@@ -47,7 +48,7 @@ class LoginViewModel(private val repository: AlbumRepository) : ViewModel() {
     }
 
     fun navigationHandled() {
-        // Clear success after navigation so an observer cannot navigate twice.
+        // Clear success after navigation so a restarted collector cannot navigate twice.
         _state.value = LoginUiState()
     }
 }
