@@ -10,6 +10,7 @@ import com.example.albumassignment.data.Album
 import com.example.albumassignment.data.displaySummary
 import com.example.albumassignment.data.displayTitle
 import com.example.albumassignment.databinding.ItemAlbumBinding
+import com.example.albumassignment.ui.topicIcon
 
 class AlbumAdapter(private val onClick: (Album) -> Unit) :
     ListAdapter<Album, AlbumAdapter.AlbumViewHolder>(ItemDiffCallback) {
@@ -19,6 +20,7 @@ class AlbumAdapter(private val onClick: (Album) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Album) {
+            binding.topicIcon.setImageResource(topicIcon(item))
             binding.albumTitle.text = item.displayTitle()
             binding.albumMeta.text = item.displaySummary()
 

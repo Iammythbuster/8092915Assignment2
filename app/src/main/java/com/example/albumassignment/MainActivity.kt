@@ -11,6 +11,7 @@ import com.example.albumassignment.databinding.ActivityMainBinding
 import com.example.albumassignment.ui.dashboard.DashboardFragment
 import com.example.albumassignment.ui.details.DetailsFragment
 import com.example.albumassignment.ui.login.LoginFragment
+import androidx.fragment.app.FragmentManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,27 @@ class MainActivity : AppCompatActivity() {
             )
             replace(R.id.fragmentContainer, DetailsFragment.newInstance(album))
             addToBackStack("details")
+        }
+    }
+    fun signOut() {
+        val manager = supportFragmentManager
+
+        if (manager.isStateSaved) return
+
+        manager.popBackStackImmediate(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+
+        manager.commit {
+            setReorderingAllowed(true)
+
+            setCustomAnimations(
+                R.animator.fade_in,
+                R.animator.fade_out
+            )
+
+            replace(R.id.fragmentContainer, LoginFragment())
         }
     }
 }

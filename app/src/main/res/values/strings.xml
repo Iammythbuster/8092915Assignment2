@@ -20,4 +20,5 @@
     <string name="retry">Retry</string>
     <string name="empty_albums">No items were returned. Try refreshing.</string>
     <string name="loading">Loading, please wait</string>
+    <string name="sign_out">Sign out</string>
 </resources>

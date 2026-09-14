@@ -38,6 +38,16 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.refreshButton.setOnClickListener {
             viewModel.loadAlbums(keypass, forceRefresh = true)
         }
+        binding.signOutButton.setOnClickListener {
+            if (!openingDetails) {
+                openingDetails = true
+
+                binding.signOutButton.isEnabled = false
+                binding.refreshButton.isEnabled = false
+
+                (requireActivity() as MainActivity).signOut()
+            }
+        }
         // Collect only while this fragment view is started.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

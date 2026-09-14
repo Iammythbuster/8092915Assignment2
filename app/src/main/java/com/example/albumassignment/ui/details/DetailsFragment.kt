@@ -11,6 +11,7 @@ import com.example.albumassignment.data.displayDescription
 import com.example.albumassignment.data.displaySummary
 import com.example.albumassignment.data.displayTitle
 import com.example.albumassignment.databinding.FragmentDetailsBinding
+import com.example.albumassignment.ui.topicIcon
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -20,9 +21,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         val binding = FragmentDetailsBinding.bind(view)
         val args = requireArguments()
 
-        binding.albumTitle.text = args.getString("title", "Item")
+        binding.topicIcon.setImageResource(
+            args.getInt("icon", R.drawable.ic_catalogue)
+        )
 
-        // Reuse the existing TextView for all summary fields.
+        binding.albumTitle.text = args.getString("title", "Item")
         binding.releaseYear.text = args.getString("summary", "")
 
         binding.artistName.isVisible = false
@@ -44,7 +47,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             arguments = bundleOf(
                 "title" to item.displayTitle(),
                 "summary" to item.displaySummary(),
-                "description" to item.displayDescription()
+                "description" to item.displayDescription(),
+                "icon" to topicIcon(item)
             )
         }
     }
